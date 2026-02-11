@@ -7,8 +7,8 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Image } from 'react-native';
 import bell from '../assets/bell.png';
-import newspaper from '../assets/newspaper.png';
-import { Home } from './screens/Home';
+import star from '../assets/star.png';
+import Landing from './screens/Landing';
 import { Profile } from './screens/Profile';
 import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
@@ -16,13 +16,12 @@ import { NotFound } from './screens/NotFound';
 
 const HomeTabs = createBottomTabNavigator({
   screens: {
-    Home: {
-      screen: Home,
+    Landing: {
+      screen: Landing,
       options: {
-        title: 'Feed',
         tabBarIcon: ({ color, size }) => (
           <Image
-            source={newspaper}
+            source={star}
             tintColor={color}
             style={{
               width: size,
