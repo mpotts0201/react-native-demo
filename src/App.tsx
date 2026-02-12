@@ -4,8 +4,9 @@ import { Asset } from 'expo-asset';
 import { createURL } from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
-import { useColorScheme } from 'react-native';
-import { Navigation } from './navigation';
+import { useColorScheme, View } from 'react-native';
+import AppNavigator, { Navigation } from './navigation';
+import BottomNavBar from './components/navBar/BottomNavBar';
 
 Asset.loadAsync([
   ...NavigationAssets,
@@ -23,15 +24,21 @@ export function App() {
   const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
 
   return (
-    <Navigation
-      theme={theme}
-      linking={{
-        enabled: 'auto',
-        prefixes: [prefix],
-      }}
-      onReady={() => {
-        SplashScreen.hideAsync();
-      }}
-    />
+    <View style={{ flex: 1 }}>
+      <AppNavigator />
+      <BottomNavBar />
+    </View>
   );
+  // return (
+  //   <Navigation
+  //     theme={theme}
+  //     linking={{
+  //       enabled: 'auto',
+  //       prefixes: [prefix],
+  //     }}
+  //     onReady={() => {
+  //       SplashScreen.hideAsync();
+  //     }}
+  //   />
+  // );
 }
