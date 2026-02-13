@@ -5,8 +5,9 @@ import { createURL } from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { useColorScheme, View } from 'react-native';
-import AppNavigator, { Navigation } from './navigation';
+import AppNavigator from './navigation';
 import BottomNavBar from './components/navBar/BottomNavBar';
+import FullScreen from './components/3DModels/FullScreen';
 
 Asset.loadAsync([
   ...NavigationAssets,
@@ -27,18 +28,7 @@ export function App() {
     <View style={{ flex: 1 }}>
       <AppNavigator />
       <BottomNavBar />
+      {/* <FullScreen /> */}
     </View>
   );
-  // return (
-  //   <Navigation
-  //     theme={theme}
-  //     linking={{
-  //       enabled: 'auto',
-  //       prefixes: [prefix],
-  //     }}
-  //     onReady={() => {
-  //       SplashScreen.hideAsync();
-  //     }}
-  //   />
-  // );
 }

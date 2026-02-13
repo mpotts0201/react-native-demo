@@ -16,7 +16,7 @@ import { Settings } from './screens/Settings';
 import { Updates } from './screens/Updates';
 import { NotFound } from './screens/NotFound';
 import TabIcon from '../components/3DModels/TabIcon';
-import StarModel from '../components/3DModels/StarModel';
+import StarModel from '../components/3DModels/SpinningIcon';
 
 export enum routes { LANDING = "LANDING", UI_LIB = "UI_LIB" }
 

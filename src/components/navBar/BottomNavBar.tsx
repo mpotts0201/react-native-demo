@@ -1,21 +1,24 @@
 import { useState, SetStateAction, Dispatch, FC } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import StarModel from '../3DModels/StarModel';
+import SpinningIcon from '../3DModels/SpinningIcon';
 import TabIcon from '../3DModels/TabIcon';
 import { routes } from '../../navigation'
+
+const modelPathStar = require("../../assets/3DModels/star.glb");
+const modelPathAtSymbol = require("../../assets/3DModels/email_at_symbol.glb");
 
 const navbarItems = [
     {
         route: routes.LANDING,
-        model: StarModel
+        modelPath: modelPathStar
     },
     {
         route: routes.UI_LIB,
-        model: StarModel
+        modelPath: modelPathAtSymbol
     }
 ]
 
-const NavBarItem = ({ selected, route, setSelected, model }: { selected: boolean; route: SetStateAction<routes>, setSelected: Dispatch<SetStateAction<routes>>, model: FC }) => {
+const NavBarItem = ({ selected, route, setSelected, modelPath }: { selected: boolean; route: SetStateAction<routes>, setSelected: Dispatch<SetStateAction<routes>>, modelPath: any }) => {
     const [isSpinning, setIsSpinning] = useState(false);
 
     const handlePress = () => {
@@ -27,7 +30,7 @@ const NavBarItem = ({ selected, route, setSelected, model }: { selected: boolean
     return (
         <TouchableOpacity onPress={handlePress} style={styles.pressable}>
             <TabIcon>
-                <StarModel scale={2.0} isSpinning={isSpinning} setIsSpinning={setIsSpinning} />
+                <SpinningIcon scale={2.0} isSpinning={isSpinning} setIsSpinning={setIsSpinning} modelPath={modelPath} />
             </TabIcon>
         </TouchableOpacity>
     );
@@ -38,7 +41,7 @@ const BottomNavBar = () => {
 
     const renderNavItems = () => {
         return navbarItems.map((item) => {
-            return <NavBarItem key={item.route} selected={item.route == selected} route={item.route} setSelected={setSelected} model={item.model} />;
+            return <NavBarItem key={item.route} selected={item.route == selected} route={item.route} setSelected={setSelected} modelPath={item.modelPath} />;
         })
     }
 

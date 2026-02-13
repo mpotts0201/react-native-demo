@@ -5,16 +5,17 @@ import { useFrame } from '@react-three/fiber/native';
 import { GLTF } from 'three-stdlib';
 import * as THREE from 'three';
 
-const modelPath = require("../../assets/3DModels/email_at_symbol.glb");
+// const modelPath = require("../../assets/3DModels/star.glb");
 
 interface Props {
     isSpinning: boolean;
-    setIsSpinning: Dispatch<SetStateAction<boolean>>
+    setIsSpinning: Dispatch<SetStateAction<boolean>>;
+    modelPath: any;
 }
 
 // TODO: Find correct extendable prop type
-const StarModel = (props: any) => {
-    const { isSpinning, setIsSpinning } = props
+const SpinningIcon = (props: any) => {
+    const { isSpinning, setIsSpinning, modelPath } = props
     const { scene } = useGLTF(modelPath) as GLTF & { scene: THREE.Group };
     const meshRef = useRef<Mesh>(null);
 
@@ -44,6 +45,6 @@ const StarModel = (props: any) => {
 }
 
 // Preload the model for faster loading
-useGLTF.preload(modelPath);
+// useGLTF.preload(modelPath);
 
-export default StarModel;
+export default SpinningIcon;
