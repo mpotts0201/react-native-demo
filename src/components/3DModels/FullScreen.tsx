@@ -1,26 +1,34 @@
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { useState } from "react";
+import { View, StyleSheet, useWindowDimensions, TouchableOpacity, Text } from "react-native";
 import { Canvas } from '@react-three/fiber/native';
-import { Physics, RigidBody } from '@react-three/rapier';
 import Model from './Model';
+import FallingAtSymbol from "./FallingAtSymbol";
 
-const modelPath = require("../../assets/3DModels/star.glb")
+const modelPath = require("../../assets/3DModels/email_at_symbol.glb")
 
 const ExplosiveModel = () => {
 
 };
 
 const FullScreen = () => {
+    const [show, setShow] = useState(true);
+    const [reset, setReset] = useState(0);
     const { height, width } = useWindowDimensions()
+
+    const handleReset = () => {
+        setReset(reset + 1);
+    };
+
     return (
-        <View>
-            <Canvas pointerEvents="none" camera={{ fov: 45, position: [0, 0, 10] }} frameloop='always' style={{ ...styles.canvas, ...{ width, height }}}>
+        <View style={{ ...styles.canvas, ...{ display: show ? "flex" : "none" } }}> 
+            <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50 }} onPress={handleReset}>
+                <Text>Reset</Text>
+            </TouchableOpacity>
+            <Canvas pointerEvents="none" camera={{ fov: 45, position: [0, 0, 10] }} frameloop='always' style={{ width, height }}>
                 <ambientLight intensity={1.0} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
-                <Physics debug>
-                    <RigidBody colliders="ball" restitution={1.2}>
-                        <Model modelPath={modelPath} />
-                    </RigidBody>
-                </Physics>
+                <FallingAtSymbol reset={reset} />
+                {/* <Model modelPath={modelPath} /> */}
             </Canvas>
         </View>
     );
@@ -28,7 +36,6 @@ const FullScreen = () => {
 
 const styles = StyleSheet.create({
     canvas: {
-        backgroundColor: "red",
         position: "absolute",
         top: 0,
         left: 0,

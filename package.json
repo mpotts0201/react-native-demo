@@ -9,14 +9,16 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
+    "@dimforge/rapier3d-compat": "^0.19.3",
     "@expo/metro-runtime": "~6.1.2",
     "@react-navigation/bottom-tabs": "^7.4.7",
     "@react-navigation/elements": "^2.6.4",
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/native-stack": "^7.3.26",
+    "@react-three/cannon": "^6.6.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
-    "@react-three/rapier": "^2.2.0",
+    "@types/three": "^0.182.0",
     "expo": "^54.0.7",
     "expo-asset": "~12.0.8",
     "expo-dev-client": "~6.0.12",

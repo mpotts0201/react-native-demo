@@ -28,7 +28,7 @@ export function App() {
     <View style={{ flex: 1 }}>
       <AppNavigator />
       <BottomNavBar />
-      {/* <FullScreen /> */}
+      <FullScreen />
     </View>
   );
 }
