@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei/native';
 import { GLTF } from 'three-stdlib';
 import * as THREE from 'three';
 
-const GRAVITY = -0.01; // Speed of the pull
+const GRAVITY = -9.18; // Speed of the pull
 // const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
 const FLOOR_Y = -2; // Where the "ground" is
 
@@ -30,8 +30,10 @@ const FallingLetter = ({ finishedCount, xPos = 0, reset, modelSource }: { finish
         }
     }, [reset]);
 
-    useFrame((state) => {
+    useFrame((state, delta) => {
         if (!meshRef.current) return;
+
+        const dt = Math.min(delta, 0.1);
 
         const { viewport } = state; // Automatically updates on rotation/resize
     
@@ -46,17 +48,16 @@ const FallingLetter = ({ finishedCount, xPos = 0, reset, modelSource }: { finish
         // const leftWall = -viewport.width / 2 + margin;
 
         // 1. Apply gravity to velocity
-        velocity.current += GRAVITY;
+        velocity.current += GRAVITY * dt;
 
         // 2. Apply velocity to position
-        positionY.current += velocity.current;
+        positionY.current += velocity.current * dt;
 
         // 3. Collision Detection (The Floor)
         if (positionY.current <= FLOOR_Y && !firstBounce) {
             setFirstBounce(true);
             positionY.current = FLOOR_Y; // Reset to floor level
             velocity.current *= -BOUNCE_DAMPING; // Reverse and dampen velocity
-            
         }
         // signal to parent set when off screen
         if (positionY.current <= offScreenLimit) {
