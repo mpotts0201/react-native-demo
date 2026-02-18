@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei/native';
 import { GLTF } from 'three-stdlib';
 import * as THREE from 'three';
 
-const GRAVITY = -0.015; // Speed of the pull
+const GRAVITY = -0.01; // Speed of the pull
 // const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
 const FLOOR_Y = -2; // Where the "ground" is
 

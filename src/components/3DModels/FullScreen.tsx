@@ -5,13 +5,17 @@ import FallingAtSymbol from "./FallingAtSymbol";
 import FallingWord from "./FallingWord";
 
 const FullScreen = () => {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const [reset, setReset] = useState(0);
     const { height, width } = useWindowDimensions()
 
     const handleReset = () => {
         setReset(reset + 1);
     };
+
+    if (!show) {
+        return null;
+    }
 
     return (
         <View style={{ ...styles.canvas, ...{ display: show ? "flex" : "none" } }}> 
@@ -22,7 +26,6 @@ const FullScreen = () => {
                 <ambientLight intensity={1.0} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
                 <FallingWord reset={reset} />
-                {/* <FallingAtSymbol reset={reset} /> */}
             </Canvas>
         </View>
     );
