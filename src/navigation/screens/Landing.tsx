@@ -1,18 +1,23 @@
-import { View, Text } from "react-native"
-import { Suspense } from "react"
-import ScreenContainer from "../../components/screenComponents/ScreenContainer"
-import ModelTest from "../../components/3DModels/3DModelTest"
-import StarModel from "../../components/3DModels/SpinningIcon"
-import { Canvas } from '@react-three/fiber/native';
+import { View, Text, TouchableOpacity } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+import { setShow } from "../../../store/slices/fullScreen3DSlice";
+import ScreenContainer from "../../components/screenComponents/ScreenContainer";
 
 const Landing = () => {
+    const dispatch = useDispatch();
+    const handleOrder = () => {
+        dispatch(setShow(true));
+    };
+
     return (
         <ScreenContainer>
             <View>
-                <Text>Landing Screen</Text>
+                <TouchableOpacity onPress={handleOrder}>
+                    <Text>Landing Screen</Text>
+                </TouchableOpacity>
             </View>
         </ScreenContainer>
-    )
+    );
 };
 
 export default Landing;

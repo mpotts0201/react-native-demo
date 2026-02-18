@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, RefObject } from 'react';
 import { useFrame } from '@react-three/fiber/native';
 import { useGLTF } from '@react-three/drei/native';
 import { GLTF } from 'three-stdlib';
@@ -8,7 +8,7 @@ const GRAVITY = -0.01; // Speed of the pull
 // const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
 const FLOOR_Y = -2; // Where the "ground" is
 
-const FallingLetter = ({ xPos = 0, reset, modelSource }: { xPos: number; reset: number, modelSource: any }) => {
+const FallingLetter = ({ finishedCount, xPos = 0, reset, modelSource }: { finishedCount: RefObject<Set<number>>; xPos: number; reset: number, modelSource: any }) => {
     const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
     const [firstBounce, setFirstBounce] = useState(false)
     const { scene } = useGLTF(modelSource) as GLTF & { scene: THREE.Group };
@@ -35,6 +35,8 @@ const FallingLetter = ({ xPos = 0, reset, modelSource }: { xPos: number; reset: 
 
         const { viewport } = state; // Automatically updates on rotation/resize
     
+        const offScreenLimit = -viewport.height / 2 - 2; 
+
         // const positionX = (viewport.width / length) * index
         meshRef.current.position.x = xPos
         // // Calculate boundaries (accounting for model scale, approx 0.5 units)
@@ -51,13 +53,15 @@ const FallingLetter = ({ xPos = 0, reset, modelSource }: { xPos: number; reset: 
 
         // 3. Collision Detection (The Floor)
         if (positionY.current <= FLOOR_Y && !firstBounce) {
-        setFirstBounce(true);
-        positionY.current = FLOOR_Y; // Reset to floor level
-        velocity.current *= -BOUNCE_DAMPING; // Reverse and dampen velocity
-        
-        // Stop small jitters when motion becomes tiny
-        if (positionY.current <= FLOOR_Y * 4) velocity.current = 0;
+            setFirstBounce(true);
+            positionY.current = FLOOR_Y; // Reset to floor level
+            velocity.current *= -BOUNCE_DAMPING; // Reverse and dampen velocity
+            
         }
+        // signal to parent set when off screen
+        if (positionY.current <= offScreenLimit) {
+            finishedCount.current.add(xPos);
+        };
 
         // 4. Update the actual 3D Mesh
         meshRef.current.position.y = positionY.current;
