@@ -1,4 +1,4 @@
-import React, { SetStateAction, Dispatch, useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useFrame } from '@react-three/fiber/native';
 import { useGLTF } from '@react-three/drei/native';
 import { GLTF } from 'three-stdlib';
@@ -13,7 +13,7 @@ const FLOOR_Y = -2; // Where the "ground" is
 const FallingAtSymbol = ({ reset }: { reset: number }) => {
   const [firstBounce, setFirstBounce] = useState(false)
   const { scene } = useGLTF(AtModelSource) as GLTF & { scene: THREE.Group };
-  const meshRef = useRef(null);
+  const meshRef = useRef<THREE.Mesh>(null);
   const dir = Math.random() > 0.5 ? 1 : -1
   // We use refs for physics variables to avoid React re-renders 
   // (This keeps it running at a smooth 60fps)
@@ -34,6 +34,7 @@ const FallingAtSymbol = ({ reset }: { reset: number }) => {
   useFrame(() => {
     if (!meshRef.current) return;
 
+    meshRef.current.position.x = -1;
     // 1. Apply gravity to velocity
     velocity.current += GRAVITY;
 

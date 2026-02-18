@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { View, StyleSheet, useWindowDimensions, TouchableOpacity, Text } from "react-native";
 import { Canvas } from '@react-three/fiber/native';
-import Model from './Model';
 import FallingAtSymbol from "./FallingAtSymbol";
-
-const modelPath = require("../../assets/3DModels/email_at_symbol.glb")
-
-const ExplosiveModel = () => {
-
-};
+import FallingWord from "./FallingWord";
 
 const FullScreen = () => {
     const [show, setShow] = useState(true);
@@ -27,8 +21,8 @@ const FullScreen = () => {
             <Canvas pointerEvents="none" camera={{ fov: 45, position: [0, 0, 10] }} frameloop='always' style={{ width, height }}>
                 <ambientLight intensity={1.0} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
-                <FallingAtSymbol reset={reset} />
-                {/* <Model modelPath={modelPath} /> */}
+                <FallingWord reset={reset} />
+                {/* <FallingAtSymbol reset={reset} /> */}
             </Canvas>
         </View>
     );
