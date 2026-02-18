@@ -5,6 +5,8 @@ import { createURL } from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import * as React from 'react';
 import { useColorScheme, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from '../store/store';
 import AppNavigator from './navigation';
 import BottomNavBar from './components/navBar/BottomNavBar';
 import FullScreen from './components/3DModels/FullScreen';
@@ -26,9 +28,11 @@ export function App() {
 
   return (
     <View style={{ flex: 1 }}>
-      <AppNavigator />
-      <BottomNavBar />
-      <FullScreen />
+      <Provider store={store}>
+        <AppNavigator />
+        <BottomNavBar />
+        <FullScreen />
+      </Provider>
     </View>
   );
 }
