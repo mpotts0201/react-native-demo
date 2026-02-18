@@ -20,7 +20,6 @@ SplashScreen.preventAutoHideAsync();
 const prefix = createURL('/');
 
 export function App() {
-  const [show3DCanvas, setShow3DCanvas] = React.useState(false);
   const colorScheme = useColorScheme();
 
   const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
@@ -29,7 +28,7 @@ export function App() {
     <View style={{ flex: 1 }}>
       <AppNavigator />
       <BottomNavBar />
-      {show3DCanvas ? <FullScreen /> : null}
+      <FullScreen />
     </View>
   );
 }

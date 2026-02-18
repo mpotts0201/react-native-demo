@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { View, StyleSheet, useWindowDimensions, TouchableOpacity, Text } from "react-native";
 import { Canvas } from '@react-three/fiber/native';
-import FallingAtSymbol from "./FallingAtSymbol";
 import FallingWord from "./FallingWord";
 
 const FullScreen = () => {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const [reset, setReset] = useState(0);
     const { height, width } = useWindowDimensions()
 
@@ -18,7 +17,7 @@ const FullScreen = () => {
     }
 
     return (
-        <View style={{ ...styles.canvas, ...{ display: show ? "flex" : "none" } }}> 
+        <View pointerEvents="none" style={styles.canvas}>
             <TouchableOpacity style={{ backgroundColor: "red", width: 100, height: 50 }} onPress={handleReset}>
                 <Text>Reset</Text>
             </TouchableOpacity>
