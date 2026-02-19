@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setShow, setAnimationName, AnimationNames } from "../../../store/slices/fullScreen3DSlice";
 import ScreenContainer from "../../components/screenComponents/ScreenContainer";
 

@@ -7,7 +7,7 @@ import { selectShow, setShow } from "../../../store/slices/fullScreen3DSlice";
 import { GLTF } from 'three-stdlib';
 
 
-const AtModelSource = require("../../assets/3DModels/email_at_symbol.glb");
+const AtModelSource = require("../../assets/3DModels/pizza_slice.glb");
 
 // interface AtGLTF extends GLTF {
 //   nodes: {
@@ -21,7 +21,7 @@ const AtModelSource = require("../../assets/3DModels/email_at_symbol.glb");
 // }
 
 const GRAVITY = -9.18;
-const COUNT = 300; // Number of falling symbols
+const COUNT = 6; // Number of falling symbols
 const tempObject = new THREE.Object3D();
 
 const FallingInstances = () => {
@@ -39,6 +39,14 @@ const FallingInstances = () => {
             floor: Math.random() * -10.0,
             firstBounce: false,
             dir: Math.random() > 0.5 ? 1 : -1,
+                // 1. Initial random rotation (Euler)
+            rot: new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI),
+            // 2. Random spin velocity for each axis
+            spin: {
+                x: (Math.random() - 0.5) * 2,
+                y: (Math.random() - 0.5) * 2,
+                z: (Math.random() - 0.5) * 2,
+            }
         }));
     }, []);
 
@@ -51,13 +59,18 @@ const FallingInstances = () => {
             }
         }
 
-        const offScreenLimit = -viewport.height / 2 - 2;
+        const offScreenLimit = -viewport.height - 2;
         const dt = Math.min(delta, 0.1);
 
         particles.forEach((p, i) => {
             // 1. Math: Update individual physics
             p.velocity += GRAVITY * dt; // Gravity
             p.position[1] += p.velocity * dt; // Apply to Y
+
+            // Update the rotation values over time
+            p.rot.x += p.spin.x * dt;
+            p.rot.y += p.spin.y * dt;
+            p.rot.z += p.spin.z * dt;
 
             if (p.position[1] < p.floor && !p.firstBounce) {
                 p.position[1] = p.floor;
@@ -70,10 +83,8 @@ const FallingInstances = () => {
             }
 
             // 2. Visual: Update the instance matrix
-            tempObject.position.set(...p.position);
-            tempObject.rotation.x += 0.0005;
-            tempObject.rotation.y += 0.0005;
-            tempObject.rotation.z += 0.0005;
+            tempObject.position.set(p.position[0], p.position[1], p.position[2]);
+            tempObject.rotation.set(p.rot.x, p.rot.y, p.rot.z);
             tempObject.updateMatrix();
 
             meshRef.current.setMatrixAt(i, tempObject.matrix);
@@ -85,8 +96,8 @@ const FallingInstances = () => {
     return (
         <instancedMesh 
             ref={meshRef}
-            args={[nodes.Text.geometry, nodes.Text.material, COUNT]}
-            scale={0.5}
+            args={[nodes.pizza.geometry, nodes.pizza.material, COUNT]}
+            scale={0.4}
         />
     );
 };
