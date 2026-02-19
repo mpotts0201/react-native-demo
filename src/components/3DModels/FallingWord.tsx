@@ -37,7 +37,7 @@ const wordArr = [
     },
 ];
 
-const FallingWord = ({ reset }: { reset: number }) => {
+const FallingWord = () => {
     const dispatch = useDispatch();
     const show = useSelector(selectShow);
     const finishedCount = useRef<Set<number>>(new Set());
@@ -57,7 +57,7 @@ const FallingWord = ({ reset }: { reset: number }) => {
     const handleLetters = () => {
         return wordArr.map((letter, index) => {
             const xPos = (index * spacing) - (width / 2) + (spacing / 2);
-            return <FallingLetter finishedCount={finishedCount} key={index} xPos={xPos} reset={reset} modelSource={letter.modelSource} />;
+            return <FallingLetter finishedCount={finishedCount} key={index} xPos={xPos} modelSource={letter.modelSource} />;
         });
     };
 

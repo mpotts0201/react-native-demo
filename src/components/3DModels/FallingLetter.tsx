@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, RefObject } from 'react';
+import React, { useRef, useState, RefObject } from 'react';
 import { useFrame } from '@react-three/fiber/native';
 import { useGLTF } from '@react-three/drei/native';
 import { GLTF } from 'three-stdlib';
@@ -8,7 +8,7 @@ const GRAVITY = -9.18; // Speed of the pull
 // const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
 const FLOOR_Y = -2; // Where the "ground" is
 
-const FallingLetter = ({ finishedCount, xPos = 0, reset, modelSource }: { finishedCount: RefObject<Set<number>>; xPos: number; reset: number, modelSource: any }) => {
+const FallingLetter = ({ finishedCount, xPos = 0, modelSource }: { finishedCount: RefObject<Set<number>>; xPos: number; modelSource: any }) => {
     const BOUNCE_DAMPING = (Math.random() * 0.5) + 0.2; // Energy kept after a bounce (0.7 = 70%)
     const [firstBounce, setFirstBounce] = useState(false)
     const { scene } = useGLTF(modelSource) as GLTF & { scene: THREE.Group };
@@ -18,17 +18,6 @@ const FallingLetter = ({ finishedCount, xPos = 0, reset, modelSource }: { finish
     // (This keeps it running at a smooth 60fps)
     const velocity = useRef(0);
     const positionY = useRef(5);
-
-    useEffect(() => {
-        if (reset && meshRef.current) {
-        setFirstBounce(false)
-        velocity.current = 0
-        positionY.current = 5
-        meshRef.current.rotation.x = 0.0;
-        meshRef.current.rotation.y = 0.0;
-        meshRef.current.rotation.z = 0.0;
-        }
-    }, [reset]);
 
     useFrame((state, delta) => {
         if (!meshRef.current) return;
