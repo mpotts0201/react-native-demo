@@ -1,18 +1,24 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { useDispatch } from "react-redux";
-import { setShow, setAnimationName, AnimationNames } from "../../../store/slices/fullScreen3DSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setShow, setAnimationName, AnimationNames, selectShow } from "../../../store/slices/fullScreen3DSlice";
 import ScreenContainer from "../../components/screenComponents/ScreenContainer";
 
 const Landing = () => {
     const dispatch = useDispatch();
+    const show = useSelector(selectShow);
+
     const handleOrder = () => {
-        dispatch(setAnimationName(AnimationNames.ORDERED));
-        dispatch(setShow(true));
+        if (!show) {
+            dispatch(setAnimationName(AnimationNames.ORDERED));
+            dispatch(setShow(true));
+        }
     };
 
     const handlePizza = () => {
-        dispatch(setAnimationName(AnimationNames.PIZZA));
-        dispatch(setShow(true));
+        if (!show) {
+            dispatch(setAnimationName(AnimationNames.PIZZA));
+            dispatch(setShow(true));
+        }
     };
 
     return (
